@@ -63,7 +63,7 @@ void showMainMenu(){
     NSString *prompt = @"\n\n" \
     	"THREELOW - What would you like do next?\n" \
 	    "%@ - roll 5 dice\n" \
-	    "%@ <n> - hold die with id <n>\n" \
+	    "%@ <n> - toggle a die with <id> to be HELD or ROLLABLE\n" \
     	"%@ <n> - show the current dice values\n" \
  	   	"%@ - Exit Application\n";
     

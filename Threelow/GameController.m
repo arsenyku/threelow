@@ -69,13 +69,22 @@
             [InputCollector showLineWithText:[NSString stringWithFormat:
                                               @"There is no die with ID %@.  No change to game state.", dieName]];
         }else{
-            [InputCollector showLineWithText:[NSString stringWithFormat:
-                                              @"Die %@ is already held.  No change to game state.", dieName]];            
+
+        	// UNHOLD the die
+            [self.heldDice removeObjectForKey:die.name];
+            [self.rollableDice setValue:die forKey:die.name];
+            [InputCollector showLineWithText:
+	             [NSString stringWithFormat:@"Die %@ with value %d can now be rolled.",
+    	          die.name, die.currentValue]];
+
         }
         
         
     } else {
-        [self.rollableDice removeObjectForKey:dieName];
+        
+        // HOLD the die
+        
+        [self.rollableDice removeObjectForKey:die.name];
         [self.heldDice setValue:die forKey:die.name];
         [InputCollector showLineWithText:
          	[NSString stringWithFormat:@"Now holding die %@ with value %d",
