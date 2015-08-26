@@ -14,7 +14,8 @@
 @property (nonatomic, assign, readonly) int currentValue;
 @property (nonatomic, assign, readonly) int numberOfSides;
 
--(instancetype)initWithNumberOfSides:(int)sides;
+-(instancetype)initWithName:(NSString*)name;
+-(instancetype)initWithName:(NSString*)name andNumberOfSides:(int)sides;
 
 -(int)roll;
 

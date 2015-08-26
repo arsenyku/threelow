@@ -18,8 +18,15 @@
     return self;
 }
 
--(instancetype)initWithNumberOfSides:(int)sides{
+-(instancetype)initWithName:(NSString*)name{
     self = [super init];
+	_name = name;
+    return self;
+}
+
+
+-(instancetype)initWithName:(NSString*)name andNumberOfSides:(int)sides{
+    self = [self initWithName:name];
     _numberOfSides = sides;
     return self;
 }
