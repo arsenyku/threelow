@@ -13,8 +13,9 @@
 
 static NSString* const RollCommand = @"roll";
 static NSString* const HoldCommand = @"holdDie";
-static NSString* const ResetCommand = @"resetDice";
+static NSString* const ResetCommand = @"reset";
 static NSString* const ShowStateCommand = @"showState";
+static NSString* const KonamiCommand = @"UUDDLRLRBA";
 static NSString* const QuitCommand = @"quit";
 
 void print(NSString* text){
@@ -60,17 +61,26 @@ NSNumber* getNumericParameterFromInput(NSString* input){
     
 }
 
-void showMainMenu(){
+void showMainMenu(BOOL allowRoll){
+    NSString *rollAllowedDescription = [NSString stringWithFormat:@"%@ - roll the dice\n", RollCommand];
+	NSString *rollNotAllowedDesription = @" --- Select a die to HOLD for this turn or RESET all dice ---\n";
+
+    NSString *rollLine = rollAllowedDescription;
+    
     NSString *prompt = @"\n\n" \
-    	"THREELOW - What would you like do next?\n" \
-	    "%@ - roll 5 dice\n" \
+    	"THREELOW - What would you like do next?\n\n" \
+    	"%@" \
 	    "%@ <n> - toggle a die with <id> to be HELD or ROLLABLE\n" \
 	    "%@ - makes all the dice ROLLABLE\n"
     	"%@ <n> - show the current dice values\n" \
  	   	"%@ - Exit Application\n";
     
+    if (!allowRoll){
+        rollLine = rollNotAllowedDesription;
+    }
+    
     prompt = [NSString stringWithFormat:prompt,
-              RollCommand,
+              rollLine,
               HoldCommand,
               ResetCommand,
               ShowStateCommand,
@@ -83,25 +93,38 @@ void showMainMenu(){
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
      
-        InputCollector* inputCollector = [[InputCollector alloc] init];
-        GameController* gameController = [[GameController alloc] init];
+        InputCollector* inputCollector = [InputCollector new];
+        GameController* gameController = [GameController new];
+        GameController* previousGameController = nil;
 
-        [gameController rollDice];
         [gameController showGameState];
         
         BOOL stayInInputLoop = YES;
-        
+
         while (stayInInputLoop){
             
-            showMainMenu();
+            showMainMenu(gameController.rollAllowed);
+            
             NSString* input = [inputCollector inputForPrompt:@"> " andStoreInHistory:YES];
             input = [input stringByTrimmingCharactersInSet:
                     [NSCharacterSet whitespaceAndNewlineCharacterSet]];
             
             
             if ([input hasPrefix:RollCommand]) {
-                [gameController rollDice];
+
+                if ([gameController rollAllowed]){
+                    [gameController rollDice];
+                } else {
+                    
+                    if ([gameController rollCountSinceReset] > 4)
+                        printline(@"You have reached the roll limit.  You must reset all dice.");
+  					else if ([gameController mustSelectDieToHold])
+	                    printline(@"\nRolling is not allowed at this time.  You MUST choose at least 1 die to hold or reset all dice.");
+                
+                
+                }
                 [gameController showGameState];
+
                 
             } else if ([input hasPrefix:HoldCommand]) {
                 NSString *dieName = getStringParameterFromInput(input);
@@ -119,6 +142,16 @@ int main(int argc, const char * argv[]) {
                 printline(@"Exiting. Thanks for playing.") ;
                 stayInInputLoop = NO;
                 break;
+            
+            } else if ([input hasPrefix:KonamiCommand]){
+                [gameController inconspicuousMethod];
+            
+            }
+            
+            if ( [gameController gameIsOver]){
+                printline( [NSString stringWithFormat:@"GAME OVER!  Your score is: %d", gameController.score] );
+                previousGameController = gameController;
+                gameController = [GameController new];
             }
         
         }

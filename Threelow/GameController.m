@@ -12,15 +12,19 @@
 
 @implementation GameController
 
+
+
 -(instancetype)init{
     self = [super init];
     _heldDice = [[NSMutableDictionary alloc] init];
     _rollableDice = [ @{ 	@"1":[[Dice alloc] initWithName:@"1"],
-                    		@"2":[[Dice alloc] initWithName:@"2"],
-                    		@"3":[[Dice alloc] initWithName:@"3"],
-                    		@"4":[[Dice alloc] initWithName:@"4"],
-                    		@"5":[[Dice alloc] initWithName:@"5"]
-                       } mutableCopy ];
+                            @"2":[[Dice alloc] initWithName:@"2"],
+                            @"3":[[Dice alloc] initWithName:@"3"],
+                            @"4":[[Dice alloc] initWithName:@"4"],
+                            @"5":[[Dice alloc] initWithName:@"5"]
+                            } mutableCopy ];
+    _rollCountSinceReset = 0;
+    _mustSelectDieToHold = NO;
     return self;
 }
 
@@ -38,6 +42,8 @@
         Dice* die = self.rollableDice[ dieName ];
         [die roll];
     }
+    _rollCountSinceReset += 1;
+    _mustSelectDieToHold = YES;
 }
 
 -(void)showGameState{
@@ -62,6 +68,8 @@
         }
     }
 
+    [InputCollector showLineWithText:[NSString stringWithFormat:@"\nRolls since last reset: %d", self.rollCountSinceReset]];
+    
     [InputCollector showLineWithText:[NSString stringWithFormat:@"\nSCORE: %d", self.score]];
 
 }
@@ -87,7 +95,6 @@
             [InputCollector showLineWithText:
 	             [NSString stringWithFormat:@"Die %@ with value %d can now be rolled.",
     	          die.name, die.currentValue]];
-
         }
         
         
@@ -100,6 +107,8 @@
         [InputCollector showLineWithText:
          	[NSString stringWithFormat:@"Now holding die %@ with value %d",
              						  die.name, die.currentValue]];
+
+        _mustSelectDieToHold = NO;
     }
 }
 
@@ -111,10 +120,41 @@
         [self.rollableDice setValue:die forKey:die.name];
     }
 
+    _rollCountSinceReset = 0;
+    _mustSelectDieToHold = NO;
+    
     [InputCollector showLineWithText:
 		[NSString stringWithFormat:@"All dice are now ROLLABLE"]];
 
 }
 
+
+
+-(BOOL)rollAllowed{
+    return ( _mustSelectDieToHold == NO &&
+            [self gameIsOver] == NO &&
+            _rollCountSinceReset < 5 );
+}
+
+-(BOOL)gameIsOver{
+    return [self.heldDice count] == 5;
+}
+
+-(void)inconspicuousMethod{
+    [self resetDice];
+    NSArray* keys = [self.rollableDice.allKeys copy];
+
+    for (NSString* diceName in keys) {
+        Dice* cheatDie = [[Dice alloc] initWithName:diceName];
+    	
+        while(cheatDie.currentValue != 6){
+            [cheatDie roll];
+        }
+        
+        self.heldDice[ diceName ] = cheatDie;
+    }
+    [self.rollableDice removeAllObjects];
+    [self showGameState];
+}
 
 @end
