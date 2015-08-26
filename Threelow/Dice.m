@@ -42,7 +42,6 @@
 }
 
 -(int)roll{
-    NSLog(@"rolling %@", self.name);
     _currentValue = [self getRandomValueBetweenLow:1 andHigh:6];
     return self.currentValue;
 }

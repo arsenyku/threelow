@@ -13,6 +13,7 @@
 
 static NSString* const RollCommand = @"roll";
 static NSString* const HoldCommand = @"holdDie";
+static NSString* const ResetCommand = @"resetDice";
 static NSString* const ShowStateCommand = @"showState";
 static NSString* const QuitCommand = @"quit";
 
@@ -64,12 +65,14 @@ void showMainMenu(){
     	"THREELOW - What would you like do next?\n" \
 	    "%@ - roll 5 dice\n" \
 	    "%@ <n> - toggle a die with <id> to be HELD or ROLLABLE\n" \
+	    "%@ - makes all the dice ROLLABLE\n"
     	"%@ <n> - show the current dice values\n" \
  	   	"%@ - Exit Application\n";
     
     prompt = [NSString stringWithFormat:prompt,
               RollCommand,
               HoldCommand,
+              ResetCommand,
               ShowStateCommand,
               QuitCommand];
 
@@ -101,8 +104,12 @@ int main(int argc, const char * argv[]) {
                 [gameController showDiceStates];
                 
             } else if ([input hasPrefix:HoldCommand]) {
-                NSString* dieName = getStringParameterFromInput(input);
+                NSString *dieName = getStringParameterFromInput(input);
                 [gameController holdDie:dieName];
+                [gameController showDiceStates];
+                
+            } else if ([input hasPrefix:ResetCommand]) {
+                [gameController resetDice];
                 [gameController showDiceStates];
                 
             } else if ([input hasPrefix:ShowStateCommand]) {

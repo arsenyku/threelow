@@ -92,7 +92,18 @@
     }
 }
 
+-(void)resetDice{
+    NSArray* keys = [self.heldDice.allKeys copy];
+    for (NSString* key in keys) {
+        Dice* die = self.heldDice[ key ];
+        [self.heldDice removeObjectForKey:key];
+        [self.rollableDice setValue:die forKey:die.name];
+    }
 
+    [InputCollector showLineWithText:
+		[NSString stringWithFormat:@"All dice are now ROLLABLE"]];
+
+}
 
 
 @end

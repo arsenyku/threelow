@@ -17,4 +17,5 @@
 -(void)rollDice;
 -(void)showDiceStates;
 -(void)holdDie:(NSString*)dieName;
+-(void)resetDice;
 @end
