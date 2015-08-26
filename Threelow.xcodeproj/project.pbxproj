@@ -10,6 +10,7 @@
 		12E702C11B8E2B79008B0FA4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 12E702C01B8E2B79008B0FA4 /* main.m */; };
 		12E702C91B8E2CAC008B0FA4 /* Dice.m in Sources */ = {isa = PBXBuildFile; fileRef = 12E702C81B8E2CAC008B0FA4 /* Dice.m */; };
 		12E702CC1B8E372C008B0FA4 /* InputCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 12E702CB1B8E372C008B0FA4 /* InputCollector.m */; };
+		12E702CF1B8E439A008B0FA4 /* GameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12E702CE1B8E439A008B0FA4 /* GameController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,8 @@
 		12E702C81B8E2CAC008B0FA4 /* Dice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dice.m; sourceTree = "<group>"; };
 		12E702CA1B8E372C008B0FA4 /* InputCollector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputCollector.h; sourceTree = "<group>"; };
 		12E702CB1B8E372C008B0FA4 /* InputCollector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputCollector.m; sourceTree = "<group>"; };
+		12E702CD1B8E439A008B0FA4 /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameController.h; sourceTree = "<group>"; };
+		12E702CE1B8E439A008B0FA4 /* GameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +71,8 @@
 				12E702C81B8E2CAC008B0FA4 /* Dice.m */,
 				12E702CA1B8E372C008B0FA4 /* InputCollector.h */,
 				12E702CB1B8E372C008B0FA4 /* InputCollector.m */,
+				12E702CD1B8E439A008B0FA4 /* GameController.h */,
+				12E702CE1B8E439A008B0FA4 /* GameController.m */,
 			);
 			path = Threelow;
 			sourceTree = "<group>";
@@ -129,6 +134,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				12E702CC1B8E372C008B0FA4 /* InputCollector.m in Sources */,
+				12E702CF1B8E439A008B0FA4 /* GameController.m in Sources */,
 				12E702C91B8E2CAC008B0FA4 /* Dice.m in Sources */,
 				12E702C11B8E2B79008B0FA4 /* main.m in Sources */,
 			);

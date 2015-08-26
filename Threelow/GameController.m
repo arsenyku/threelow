@@ -1,0 +1,52 @@
+//
+//  GameController.m
+//  Threelow
+//
+//  Created by asu on 2015-08-26.
+//  Copyright (c) 2015 asu. All rights reserved.
+//
+
+#import "GameController.h"
+#import "Dice.h"
+
+@implementation GameController
+
+-(instancetype)init{
+    self = [super init];
+    _heldDice = [[NSMutableDictionary alloc] init];
+    _rollableDice = [ @{ 	@"1":[[Dice alloc] initWithName:@"1"],
+                    		@"2":[[Dice alloc] initWithName:@"2"],
+                    		@"3":[[Dice alloc] initWithName:@"3"],
+                    		@"4":[[Dice alloc] initWithName:@"4"],
+                    		@"5":[[Dice alloc] initWithName:@"5"]
+                       } mutableCopy ];
+    return self;
+}
+
+-(void)rollDice{
+    
+}
+
+-(void)showDiceStates{
+    [InputCollector showLineWithText:@"Current Game State"];
+    for (NSString* dieName in [self.rollableDice.allKeys sortedArrayUsingSelector:(@selector(isGreaterThan:))] ) {
+        Dice* die = self.rollableDice[ dieName ];
+        [InputCollector showLineWithText:[NSString stringWithFormat:@"Die %@ shows a %d", die.name, [die roll]] ];
+    }
+
+    [InputCollector showLineWithText:@"\n--------"];
+
+    if ([self.heldDice count] < 1){
+        [InputCollector showLineWithText:@"No HELD dice"];
+    } else {
+        for (NSString* dieName in [self.heldDice.allKeys sortedArrayUsingSelector:(@selector(isGreaterThan:))] ) {
+            Dice* die = self.heldDice[ dieName ];
+            [InputCollector showLineWithText:[NSString stringWithFormat:@"Die %@ shows a %d [HELD]", die.name, [die roll]] ];
+        }
+    }
+    
+    
+}
+
+
+@end

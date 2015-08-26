@@ -20,13 +20,17 @@
 
 -(instancetype)initWithName:(NSString*)name{
     self = [super init];
-	_name = name;
+    _name = name;
+    _currentValue = 1;
+    _numberOfSides = 6;
     return self;
 }
 
 
 -(instancetype)initWithName:(NSString*)name andNumberOfSides:(int)sides{
-    self = [self initWithName:name];
+    self = [super init];
+    _name = name;
+    _currentValue = 1;
     _numberOfSides = sides;
     return self;
 }
@@ -39,6 +43,10 @@
 
 -(int)roll{
     return [self getRandomValueBetweenLow:1 andHigh:6];
+}
+
+-(NSString*)description{
+    return [NSString stringWithFormat:@"Name=%@, Value=%d", _name, _currentValue];
 }
 
 @end
