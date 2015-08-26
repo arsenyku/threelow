@@ -10,27 +10,30 @@
 
 @implementation Dice
 
--(instancetype)init{
-    self = [super init];
+-(void)initializeProperties{
     _name = @"";
     _currentValue = 1;
     _numberOfSides = 6;
+}
+
+-(instancetype)init{
+    self = [super init];
+    [self initializeProperties];
     return self;
 }
 
 -(instancetype)initWithName:(NSString*)name{
     self = [super init];
+    [self initializeProperties];
     _name = name;
-    _currentValue = 1;
-    _numberOfSides = 6;
     return self;
 }
 
 
 -(instancetype)initWithName:(NSString*)name andNumberOfSides:(int)sides{
     self = [super init];
+    [self initializeProperties];
     _name = name;
-    _currentValue = 1;
     _numberOfSides = sides;
     return self;
 }

@@ -14,8 +14,9 @@
 @property (nonatomic, strong) NSMutableDictionary *heldDice;
 @property (nonatomic, strong) NSMutableDictionary *rollableDice;
 
+-(int)score;
 -(void)rollDice;
--(void)showDiceStates;
+-(void)showGameState;
 -(void)holdDie:(NSString*)dieName;
 -(void)resetDice;
 @end

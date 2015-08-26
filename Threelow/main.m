@@ -87,7 +87,7 @@ int main(int argc, const char * argv[]) {
         GameController* gameController = [[GameController alloc] init];
 
         [gameController rollDice];
-        [gameController showDiceStates];
+        [gameController showGameState];
         
         BOOL stayInInputLoop = YES;
         
@@ -101,19 +101,19 @@ int main(int argc, const char * argv[]) {
             
             if ([input hasPrefix:RollCommand]) {
                 [gameController rollDice];
-                [gameController showDiceStates];
+                [gameController showGameState];
                 
             } else if ([input hasPrefix:HoldCommand]) {
                 NSString *dieName = getStringParameterFromInput(input);
                 [gameController holdDie:dieName];
-                [gameController showDiceStates];
+                [gameController showGameState];
                 
             } else if ([input hasPrefix:ResetCommand]) {
                 [gameController resetDice];
-                [gameController showDiceStates];
+                [gameController showGameState];
                 
             } else if ([input hasPrefix:ShowStateCommand]) {
-                [gameController showDiceStates];
+                [gameController showGameState];
                 
             } else if ([input hasPrefix:QuitCommand]) {
                 printline(@"Exiting. Thanks for playing.") ;

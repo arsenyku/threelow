@@ -24,6 +24,15 @@
     return self;
 }
 
+-(int)score{
+    int result = 0;
+    for (NSString* dieName in self.heldDice) {
+        Dice* die = self.heldDice[ dieName ];
+        result += die.currentValue;
+    }
+    return result;
+}
+
 -(void)rollDice{
     for (NSString* dieName in self.rollableDice) {
         Dice* die = self.rollableDice[ dieName ];
@@ -31,7 +40,7 @@
     }
 }
 
--(void)showDiceStates{
+-(void)showGameState{
     [InputCollector showLineWithText:@"\nCurrent Game State"];
     if ([self.rollableDice count] < 1){
         [InputCollector showLineWithText:@"All dice are being HELD."];
@@ -52,6 +61,8 @@
             [InputCollector showLineWithText:[NSString stringWithFormat:@"Die %@ shows a %d [HELD]", die.name, die.currentValue] ];
         }
     }
+
+    [InputCollector showLineWithText:[NSString stringWithFormat:@"\nSCORE: %d", self.score]];
 
 }
 
