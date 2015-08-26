@@ -42,7 +42,9 @@
 }
 
 -(int)roll{
-    return [self getRandomValueBetweenLow:1 andHigh:6];
+    NSLog(@"rolling %@", self.name);
+    _currentValue = [self getRandomValueBetweenLow:1 andHigh:6];
+    return self.currentValue;
 }
 
 -(NSString*)description{

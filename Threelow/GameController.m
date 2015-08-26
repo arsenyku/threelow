@@ -7,6 +7,7 @@
 //
 
 #import "GameController.h"
+#import "InputCollector.h"
 #import "Dice.h"
 
 @implementation GameController
@@ -24,14 +25,21 @@
 }
 
 -(void)rollDice{
-    
+    for (NSString* dieName in self.rollableDice) {
+        Dice* die = self.rollableDice[ dieName ];
+        [die roll];
+    }
 }
 
 -(void)showDiceStates{
-    [InputCollector showLineWithText:@"Current Game State"];
-    for (NSString* dieName in [self.rollableDice.allKeys sortedArrayUsingSelector:(@selector(isGreaterThan:))] ) {
-        Dice* die = self.rollableDice[ dieName ];
-        [InputCollector showLineWithText:[NSString stringWithFormat:@"Die %@ shows a %d", die.name, [die roll]] ];
+    [InputCollector showLineWithText:@"\nCurrent Game State"];
+    if ([self.rollableDice count] < 1){
+        [InputCollector showLineWithText:@"All dice are being HELD."];
+    } else {
+	    for (NSString* dieName in [self.rollableDice.allKeys sortedArrayUsingSelector:(@selector(isGreaterThan:))] ) {
+    	    Dice* die = self.rollableDice[ dieName ];
+        	[InputCollector showLineWithText:[NSString stringWithFormat:@"Die %@ shows a %d", die.name, die.currentValue]];
+        }
     }
 
     [InputCollector showLineWithText:@"\n--------"];
@@ -41,12 +49,41 @@
     } else {
         for (NSString* dieName in [self.heldDice.allKeys sortedArrayUsingSelector:(@selector(isGreaterThan:))] ) {
             Dice* die = self.heldDice[ dieName ];
-            [InputCollector showLineWithText:[NSString stringWithFormat:@"Die %@ shows a %d [HELD]", die.name, [die roll]] ];
+            [InputCollector showLineWithText:[NSString stringWithFormat:@"Die %@ shows a %d [HELD]", die.name, die.currentValue] ];
         }
     }
-    
-    
+
 }
+
+-(void)holdDie:(NSString*)dieName{
+    Dice* die = self.rollableDice[ dieName ];
+    
+    if ([dieName isEqualToString:@""]){
+        [InputCollector showLineWithText:[NSString stringWithFormat:
+                                          @"Please provide the ID of the die to hold."]];
+    }
+    if (die == nil){
+        die = self.heldDice[ dieName ];
+        
+        if (die == nil){
+            [InputCollector showLineWithText:[NSString stringWithFormat:
+                                              @"There is no die with ID %@.  No change to game state.", dieName]];
+        }else{
+            [InputCollector showLineWithText:[NSString stringWithFormat:
+                                              @"Die %@ is already held.  No change to game state.", dieName]];            
+        }
+        
+        
+    } else {
+        [self.rollableDice removeObjectForKey:dieName];
+        [self.heldDice setValue:die forKey:die.name];
+        [InputCollector showLineWithText:
+         	[NSString stringWithFormat:@"Now holding die %@ with value %d",
+             						  die.name, die.currentValue]];
+    }
+}
+
+
 
 
 @end
