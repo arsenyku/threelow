@@ -140,7 +140,8 @@
     return [self.heldDice count] == 5;
 }
 
--(void)inconspicuousMethod{
+
+-(void) winNow{
     [self resetDice];
     NSArray* keys = [self.rollableDice.allKeys copy];
 

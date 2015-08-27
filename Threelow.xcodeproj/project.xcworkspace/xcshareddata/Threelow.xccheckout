@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>8D1268E4-85E7-44B5-88FB-4DADBB4F6E41</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>Threelow</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>D48BBBD1DBFF55F18CA71DA5FB8256BCFB6C90EE</key>
 		<string>https://github.com/arsenyku/training-lhl-threelow.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Threelow.xcodeproj/project.xcworkspace</string>
+	<string>Threelow.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>D48BBBD1DBFF55F18CA71DA5FB8256BCFB6C90EE</key>

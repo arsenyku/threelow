@@ -25,7 +25,4 @@
 -(void)holdDie:(NSString*)dieName;
 -(void)resetDice;
 
-
--(void)inconspicuousMethod;
-
 @end

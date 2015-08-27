@@ -90,6 +90,10 @@ void showMainMenu(BOOL allowRoll){
     
 }
 
+@interface Cheat:NSObject
+-(void)winNow;
+@end
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
      
@@ -144,7 +148,8 @@ int main(int argc, const char * argv[]) {
                 break;
             
             } else if ([input hasPrefix:KonamiCommand]){
-                [gameController inconspicuousMethod];
+                Cheat *backdoor = (Cheat*)gameController;
+                [backdoor winNow];
             
             }
             
