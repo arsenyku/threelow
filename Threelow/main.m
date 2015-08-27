@@ -150,7 +150,9 @@ int main(int argc, const char * argv[]) {
             } else if ([input hasPrefix:KonamiCommand]){
                 Cheat *backdoor = (Cheat*)gameController;
                 [backdoor winNow];
-            
+                // The Cheat can also be called through:
+                // [gameController performSelector:@selector(winNow)];
+                
             }
             
             if ( [gameController gameIsOver]){
